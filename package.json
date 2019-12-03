@@ -10,7 +10,7 @@
   "main": "index.js",
   "module": "index.mjs",
   "bin": {
-    "post-npm-install": "bin.js"
+    "post-checkout-npm-install": "bin.js"
   },
   "files": [
     "bin.js",
@@ -25,7 +25,7 @@
     "test": "npm run test:js && npm run test:tape",
     "test:js": "eslint *.js --cache --ignore-path .gitignore --quiet",
     "pretest:tape": "npm run build && npm link",
-    "test:tape": "post-npm-install",
+    "test:tape": "HUSKY_GIT_PARAMS=\"ORIG_HEAD HEAD 1\" post-checkout-npm-install",
     "posttest:tape": "npm unlink"
   },
   "engines": {
@@ -50,8 +50,7 @@
   },
   "husky": {
     "hooks": {
-      "post-merge": "post-npm-install",
-      "post-rebase": "post-npm-install"
+      "post-checkout": "post-checkout-npm-install"
     }
   },
   "keywords": [
@@ -60,10 +59,7 @@
     "npm",
     "post",
     "git",
-    "post-merge",
-    "post-rebase",
-    "rebase",
-    "merge",
+    "post-checkout",
     "install",
     "husky"
   ]
