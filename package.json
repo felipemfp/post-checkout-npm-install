@@ -1,6 +1,6 @@
 {
   "name": "post-checkout-npm-install",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "npm install when package.json dependencies have changed post-checkout",
   "author": "Felipe Pontes <felipemfpontes@gmail.com>",
   "license": "CC0-1.0",
