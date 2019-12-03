@@ -1,5 +1,6 @@
-import postNpmInstall from './index.js';
+import postNpmInstall from "./index.js";
 
-const setToCi = process.argv.length > 2 && process.argv[2] === 'ci';
+const checkoutArgs = (process.env.HUSKY_GIT_PARAMS || "").split(" ");
+const setToCi = process.argv.length > 2 && process.argv[2] === "ci";
 
-postNpmInstall(setToCi);
+postNpmInstall(checkoutArgs, setToCi);

@@ -1,8 +1,20 @@
 import { exec as callbackExec, execSync } from 'child_process';
 import { access, constants as fsconstants } from 'fs';
 
-export default function postNpmInstall(useCi = false) {
-	checkChanges().then(
+export default function postNpmInstall(checkoutArgs, useCi = false) {
+	if (checkoutArgs.length !== 3) {
+		console.error("Invalid post-checkout args.")
+
+		process.exit(1);
+	}
+
+	if (checkoutArgs[2] === "0") {
+		console.log("Skipping non-branch checkout.")
+
+		process.exit(0);
+	}
+
+	checkChanges(checkoutArgs[0], checkoutArgs[1]).then(
 		haveDepsChanged => {
 			if (haveDepsChanged) {
 				// figure out if we should use ci command
@@ -29,9 +41,9 @@ export default function postNpmInstall(useCi = false) {
 }
 
 // read the current and last package.json files
-const checkChanges = () => Promise.all([
-	exec('git show ORIG_HEAD:package.json'),
-	exec('git show HEAD:package.json')
+const checkChanges = (previousHead, newHead) => Promise.all([
+	exec(`git show ${previousHead}:package.json`),
+	exec(`git show ${newHead}:package.json`)
 ]).then(
 	pkgs => {
 		// read the current and last package.json files as objects
