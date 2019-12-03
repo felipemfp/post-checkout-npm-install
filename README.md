@@ -1,27 +1,13 @@
-# post-npm-install [<img src="https://jonathantneal.github.io/js-logo.svg" alt="post-npm-install" width="90" height="90" align="right">][post-npm-install]
+# post-checkout-npm-install
 
-[<img alt="npm version" src="https://img.shields.io/npm/v/post-npm-install.svg" height="20">](https://www.npmjs.com/package/post-npm-install)
-[<img alt="build status" src="https://img.shields.io/travis/jonathantneal/post-npm-install.svg" height="20">](https://travis-ci.org/jonathantneal/post-npm-install)
+[<img alt="npm version" src="https://img.shields.io/npm/v/post-checkout-npm-install.svg" height="20">](https://www.npmjs.com/package/post-checkout-npm-install)
+[<img alt="build status" src="https://img.shields.io/travis/felipemfp/post-checkout-npm-install.svg" height="20">](https://travis-ci.org/felipemfp/post-checkout-npm-install)
 
-[post-npm-install] runs `npm install` when package.json dependencies have
+[post-checkout-npm-install] runs `npm install` when package.json dependencies have
 changed post-merge or post-rebase.
 
 ```sh
-npm install post-npm-install --save-dev
-```
-
-## Git Usage
-
-The post-merge hook runs after a successful merge command, which may
-automatically occur after `git pull`. If `package.json` dependencies have
-changed, [post-npm-install] automatically updates your local dependencies.
-
-```sh
-# create the post-merge hook
-echo -e "#\!/usr/bin/env bash\npost-npm-install" > .git/hooks/post-merge
-
-# make the post-merge hook executable
-chmod +x .git/hooks/post-merge
+npm install post-checkout-npm-install --save-dev
 ```
 
 ## Husky Usage
@@ -33,8 +19,7 @@ chmod +x .git/hooks/post-merge
 {
   "husky": {
     "hooks": {
-      "post-merge": "post-npm-install",
-      "post-rebase": "post-npm-install"
+      "post-checkout": "post-checkout-npm-install",
     }
   }
 }
@@ -43,10 +28,10 @@ chmod +x .git/hooks/post-merge
 ## Node Usage
 
 ```js
-const postNpmInstall = require('post-npm-install');
+const postNpmInstall = require("post-checkout-npm-install");
 
-postNpmInstall();
+postNpmInstall([previousHead, newHead, isBranchCheckout], useCI);
 ```
 
 [husky]: https://github.com/typicode/husky
-[post-npm-install]: https://github.com/jonathantneal/post-npm-install
+[post-checkout-npm-install]: https://github.com/felipemfp/post-checkout-npm-install
